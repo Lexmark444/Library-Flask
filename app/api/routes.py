@@ -2,7 +2,7 @@ from flask import Blueprint, request, jsonify, render_template
 from helpers import token_required
 from models import db, User, Contact, contact_schema, contacts_schema
 
-api = Blueprint('api',__name__,url_prefix='/api')
+api = Blueprint('api', __name__, url_prefix='/api')
 
 @api.route('/getdata')
 def getdata():
@@ -39,11 +39,9 @@ def get_contact(current_user_token):
 @api.route('/contacts/<id>', methods = ['GET'])
 @token_required
 def get_single_contacts(current_user_token, id):
-    fan = current_user_token.token
-    if fan:
-        contact = Contact.query.get(id)
-        response = contact_schema.dump(contact)
-        return jsonify(response)
+    contact = Contact.query.get(id)
+    response = contact_schema.dump(contact)
+    return jsonify(response)
 
 #Update endpoint
 @api.route('/contacts/<id>', methods = ['POST','PUT'])
